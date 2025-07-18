@@ -1,0 +1,73 @@
+                                               # Lesson 01 Assignment - Coding Task 1
+# Collect emails for students enrolled in the current Intro to Programming course
+
+#Step 1: Open the Rails console
+bin/rails c
+
+# Step 2: Find the Spring 2025 trimester
+spring_trimester = Trimester.find_by(year: '2025', term: 'Spring')
+
+#Step 3: Confirm the trimester was found
+puts spring_trimester.inspect
+
+# Step 4: Find the "Intro to Programming" coding class
+intro_coding_class = CodingClass.find_by(title: 'Intro to Programming')
+
+#Step 5: Confirm the coding class was found
+puts intro_coding_class.inspect
+
+# Step 6: Find the course offered for the Intro class in Spring 2025
+intro_course = Course.find_by(trimester_id: spring_trimester.id, coding_class_id: intro_coding_class.id)
+
+#Step 7: Confirm the course was found
+puts intro_course.inspect
+
+# Step 8: Get enrollments for this course (limit to two students as requested)
+enrollments = Enrollment.where(course_id: intro_course.id).limit(2)
+
+#Step 9: Count the number of enrollments
+puts enrollments.count
+
+# Step 10: Print the student ID and email for each enrolled student
+enrollments.each do |enrollment|
+  student = Student.find(enrollment.student_id)
+  puts "#{student.id}, #{student.email}"
+end
+
+
+# Expected output, examples :
+# 41, sueann.hermann@auer-hills.example
+# 42, stewart_terry@harris.example
+
+
+#Question 2: Find mentors who have not assigned final grades for Spring 2025 Intro to Programming course
+
+# Step 1: Find the Spring 2025 trimester
+spring_trimester = Trimester.find_by(year: '2025', term: 'Spring')
+
+# Step 2: Find the coding class "Intro to Programming"
+intro_coding_class = CodingClass.find_by(title: 'Intro to Programming')
+
+# Step 3: Find the course that links the trimester and coding class
+intro_course = Course.find_by(trimester_id: spring_trimester.id, coding_class_id: intro_coding_class.id)
+
+# Step 4: Find enrollments for the course where final_grade is missing (nil or empty)
+unengraded_enrollments = Enrollment.where(course_id: intro_course.id).where(final_grade: [nil, ""])
+
+# Step 5: Find mentor assignments related to those enrollments
+mentor_assignments = MentorEnrollmentAssignment.where(enrollment_id: unengraded_enrollments.pluck(:id))
+
+# Step 6: Get unique mentors assigned to these enrollments
+mentors = Mentor.where(id: mentor_assignments.pluck(:mentor_id)).distinct
+
+# Step 7: Print mentor id and email
+mentors.each do |mentor|
+  puts "#{mentor.id}, #{mentor.email}"
+end
+
+# Expected output, examples :
+#25, randy@hackett.example
+#26, lazaro.okon@luettgen.test
+#27, eleanore_bauch@shanahan-fisher.test
+
+
