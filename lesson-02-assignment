@@ -1,0 +1,113 @@
+                                               # Lesson 02 Assignment - Coding Task 2
+# Create a new Course record for each CodingClass in the Spring 2026 trimester
+
+# Open the Rails console
+bin/rails c
+
+# Find the Spring 2026 trimester
+spring_2026 = Trimester.find_by(term: "Spring", year: 2026)
+# Confirm that the trimester was found
+puts spring_2026.inspect
+
+# Get all CodingClasses
+coding_classes = CodingClass.all
+# Confirm  list of coding classes
+puts coding_classes.inspect
+
+# Test creating one Course for the first CodingClass
+first_class = coding_classes.first
+course = Course.create(trimester_id: spring_2026.id, coding_class_id: first_class.id)
+#Confirm the course was created
+puts course.inspect
+#Check which courses already exit(Spring 2026) avoid duplication. 
+Course.where(trimester_id: spring_2026.id).pluck(:coding_class_id)
+#delete courses incorrectly:
+Course.where(trimester_id: spring_2026.id).destroy_all
+
+#  Loop through all CodingClasses and create a Course for each
+coding_classes.each do |coding_class|
+  course = Course.create(trimester_id: spring_2026.id, coding_class_id: coding_class.id)
+  puts "Created course for CodingClass #{coding_class.id} in Spring 2026: Course ID #{course.id}"
+end
+
+# If accidentally create course I want to delete:
+course_to_delete = Course.last
+puts "Deleting course with ID #{course_to_delete.id}"
+course_to_delete.destroy
+puts "Course deleted."
+
+                            #Question 2
+
+# Create or find the student
+student = Student.find_or_create_by(first_name: "Maria2", last_name: "Maldonado2", email: "maria2@gmail.com")
+
+# Find or create the trimester
+trimester = Trimester.find_or_create_by(term: "Spring", year: 2026)
+
+# Find the Intro to Programming class
+coding_class = CodingClass.find_by(title: "Intro to Programming")
+
+# Find or create course class and trimester
+course = Course.find_or_create_by(coding_class: coding_class, trimester: trimester)
+
+# Enroll  student in the course
+student = Student.find_by(email: "maria2@gmail.com")
+enrollment = Enrollment.find_or_create_by(student: student, course: course)
+
+# Get mentor with 2<=  students assigned
+mentor_id = MentorEnrollmentAssignment.group(:mentor_id).having("COUNT(enrollment_id) <= 2").pluck(:mentor_id).first
+mentor = Mentor.find_by(id: mentor_id)
+
+# Assign the mentor to the enrollment
+assignment = MentorEnrollmentAssignment.find_or_create_by(mentor: mentor, enrollment: enrollment)
+
+# Confirmation outputs
+puts student.inspect
+puts trimester.inspect
+puts coding_class.inspect
+puts course.inspect
+puts mentor.inspect
+puts enrollment.inspect
+puts "Student #{student.first_name} enrolled in #{course.coding_class.title} for #{trimester.term} #{trimester.year}."
+
+                          # Question 3 - Describe your project
+
+# Community Needs Board - Project Description
+The goal of my application is to create a simple way for people in the community to support each other by posting what they need and offering help to others. 
+It is a basic but meaningful app that could make a real difference, especially for people going through a tough time or those who just want to help out locally.
+
+# Who are the users of your application?
+There is only one kind of user. 
+All users will have the same abilities: they can ask for help and offer help. 
+There is no admin role for now, just regular users who can interact with the posts.
+
+# Core user scenarios and features:
+- A user can sign up and log in.
+- A user can create a post describing what they need.
+- A user can browse a list of needs posted by others in the community.
+- A user can view the details of any individual post.
+- A user can respond to a post to offer help.
+- A user can edit or delete their own posts.
+- A user can view who has responded to their post to coordinate support.
+
+The app is centered around mutual aid and making it easier for people to ask for and offer help in a trusted environment.
+
+# Next Steps
+I will sketch wireframes for the main views like:
+- The homepage that lists recent needs
+- The form to create a new post
+- The detail view of an individual post
+- A user dashboard to manage posts and responses
+
+                            #Question 4 - Design the data model for your project
+
+I started by thinking about the main parts, or models, of the app. 
+three nouns I chose are: User, Post, and Comment. 
+These represent the people using the blog, the posts they write, and the comments they leave.
+The User model will have a name, email, and password. This lets people create an account and log in.
+The Post model will have a title, content, and a user ID. This means every post will be connected to the person who wrote it.
+The Comment model will have content, a post ID, and a user ID. That way, comments can show who wrote them and which post they belong to.
+The relationships look like this:
+-  user can have many posts and many comments.
+-  post belongs to one user and has many comments.
+-  comment belongs to one post and one user.

@@ -42,25 +42,28 @@ end
 
 #Question 2: Find mentors who have not assigned final grades for Spring 2025 Intro to Programming course
 
-# Step 1: Find the Spring 2025 trimester
+#step 1:Open the Rails console
+bin/rails c
+
+# Step 2: Find the Spring 2025 trimester
 spring_trimester = Trimester.find_by(year: '2025', term: 'Spring')
 
-# Step 2: Find the coding class "Intro to Programming"
+# Step 3: Find the coding class "Intro to Programming"
 intro_coding_class = CodingClass.find_by(title: 'Intro to Programming')
 
-# Step 3: Find the course that links the trimester and coding class
+# Step 4: Find the course that links the trimester and coding class
 intro_course = Course.find_by(trimester_id: spring_trimester.id, coding_class_id: intro_coding_class.id)
 
-# Step 4: Find enrollments for the course where final_grade is missing (nil or empty)
-unengraded_enrollments = Enrollment.where(course_id: intro_course.id).where(final_grade: [nil, ""])
+# Step 5: Find enrollments for the course where final_grade is missing (nil or empty)
+ungraded_enrollments = Enrollment.where(course_id: intro_course.id).where(final_grade: [nil, ""])
 
-# Step 5: Find mentor assignments related to those enrollments
+# Step 6: Find mentor assignments related to those enrollments
 mentor_assignments = MentorEnrollmentAssignment.where(enrollment_id: unengraded_enrollments.pluck(:id))
 
-# Step 6: Get unique mentors assigned to these enrollments
+# Step 7: Get unique mentors assigned to these enrollments
 mentors = Mentor.where(id: mentor_assignments.pluck(:mentor_id)).distinct
 
-# Step 7: Print mentor id and email
+# Step 8: Print mentor id and email
 mentors.each do |mentor|
   puts "#{mentor.id}, #{mentor.email}"
 end
