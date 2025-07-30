@@ -1,0 +1,37 @@
+           Lesson 3 Assignment Feature request 2: Add lesson topics and the ability to associate lessons with topics
+
+#1. What tables do I need to add?
+-A table called topics to store the names of topics.
+-A join table called lesson_topics to connect lessons and topics.
+This is because lessons can have many topics and topics can have many lessons (many-to-many).
+
+#2. What columns are needed for the associations?
+In the lesson_topics table, I need:
+
+-lesson_id (to connect to a lesson)
+-topic_id (to connect to a topic)
+
+#3. What other columns (if any) need to be included on the tables? What other data needs to be stored?
+
+-In topics table, I need a title column to store the topic name.
+-Both tables will have timestamps (created_at and updated_at).
+
+#4 Write out each table's name and column names with data types.
+
+topics:
+
+-id
+-title (string)
+-created_at (datetime), updated_at (datetime)
+
+lesson_topics:
+
+-id 
+-lesson_id 
+-topic_id 
+-created_at, updated_at 
+
+#5 Determine the generator command you'll need to create the migration file and run the command to generate the empty migration file. Start with just the topics migration. (Hint: your filename should be create_topics)
+
+bin/rails generate migration create_topics title:string
+
