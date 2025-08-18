@@ -5,10 +5,11 @@ class Course < ApplicationRecord
 
    def student_name_list
     names_list = []
-    self.enrollments.each do |enrollment|
+    enrollments.each do |enrollment|
       names_list << "#{enrollment.student.first_name} #{enrollment.student.last_name}"
     end
-    names_list
+
+      names_list
   end
 
    def student_email_list
