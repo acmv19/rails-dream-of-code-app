@@ -1,0 +1,11 @@
+<header>Trimestres</header>
+
+<div class="container">
+  <ul class="trimester-list">
+    <% @trimesters.each do |trimester| %>
+      <li class="trimester-card">
+        <%= "#{trimester.term} #{trimester.year}" %>
+      </li>
+    <% end %>
+  </ul>
+</div>
