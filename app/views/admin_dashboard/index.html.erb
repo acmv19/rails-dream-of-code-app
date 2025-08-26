@@ -1,1 +1,53 @@
-<h1>Dashboard</h1>
+<h1>Admin Dashboard</h1>
+
+<ul class="trimester-list">
+  <% if @current_trimester %>
+    <li class="trimester-card">
+      <h2>Current Trimester</h2>
+      <p><%= "#{@current_trimester.term} - #{@current_trimester.year}" %></p>
+
+      <% if @current_trimester.courses.any? %>
+        <ul>
+          <% @current_trimester.courses.each do |course| %>
+            <li class="courses-list">
+            <a href="<%= course_path(course) %>"><%= course.coding_class.title %></a>
+            <% if course.enrollments.any? %>
+            <ul>
+              <% course.enrollments.each do |enrollment| %>
+                <li><%= enrollment.student.full_name %></li>
+              <% end %>
+            </ul>
+            <% end %>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p>No courses available for this trimester.</p>
+      <% end %>
+    </li>
+  <% end %>
+
+ <% if @upcoming_trimester %>
+    <li class="trimester-card">
+      <h2>Upcoming Trimester</h2>
+      <p><%= "#{@upcoming_trimester.term} - #{@upcoming_trimester.year}" %></p>
+
+      <% if @upcoming_trimester.courses.any? %>
+        <ul>
+          <% @upcoming_trimester.courses.each do |course| %>
+            <li class="courses-list">
+              <a href="<%= course_path(course) %>"><%= course.coding_class.title %></a>
+              <% if course.enrollments.any? %>
+            <ul>
+              <% course.enrollments.each do |enrollment| %>
+                <li><%= enrollment.student.full_name %></li>
+              <% end %>
+            </ul>
+          <% end %>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
