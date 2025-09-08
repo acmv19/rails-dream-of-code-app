@@ -13,13 +13,13 @@
 
   <div>
     <%= form.label :coding_class_id, style: "display: block" %>
-    <%= form.text_field :coding_class_id %>
+     <%= form.collection_select :coding_class_id, @coding_classes, :id, :title, prompt: "Select a Coding Class" %>
   </div>
 
   <div>
     <%= form.label :trimester_id, style: "display: block" %>
-    <%= form.text_field :trimester_id %>
-  </div>
+    <%= form.collection_select :trimester_id, @trimesters, :id, :display_name, prompt: "Select a Trimester" %>
+    </div>
 
   <div>
     <%= form.label :max_enrollment, style: "display: block" %>
