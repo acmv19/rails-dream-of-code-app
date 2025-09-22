@@ -20,6 +20,8 @@ ul.trimester-list {
   padding: 0;
   max-width: 900px;
   margin: 30px auto;
+  gap: 20px; /* espacio uniforme entre tarjetas */
+  justify-content: center; /* centra las tarjetas horizontalmente */
 }
 
 ul.trimester-list li.trimester-card {
@@ -34,4 +36,21 @@ ul.trimester-list li.trimester-card {
 ul.trimester-list li.trimester-card:hover {
   transform: translateY(-3px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* edit buton*/
+ul.trimester-list li.trimester-card .edit-link {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 5px 10px;
+  background-color: #83b6ef;
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+ul.trimester-list li.trimester-card .edit-link:hover {
+  background-color: #357abd;
+  transform: translateY(-2px);
 }

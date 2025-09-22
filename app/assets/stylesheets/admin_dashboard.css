@@ -48,10 +48,10 @@ ul.trimester-list li.trimester-card p {
 }
 
 /* Diferenciar current y upcoming */
-ul.trimester-list li.trimester-card:nth-child(1) {
+ul.trimester-list li.trimester-card:nth-child(6) {
   border-left: 5px solid #4a90e2; /* Current Trimester */
 }
 
-ul.trimester-list li.trimester-card:nth-child(2) {
+ul.trimester-list li.trimester-card:nth-child(7) {
   border-left: 5px solid #f5a623; /* Upcoming Trimester */
 }

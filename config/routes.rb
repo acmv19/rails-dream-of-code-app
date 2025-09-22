@@ -5,15 +5,18 @@ Rails.application.routes.draw do
   resources :enrollments
   resources :mentor_enrollment_assignments
   resources :lessons
-  resources :courses
+
   resources :coding_classes
 
-  get "/trimesters", to: "trimesters#index"
-  get "/trimesters/:id", to: "trimesters#show"
+  #get "/trimesters", to: "trimesters#index"
+ # get "/trimesters/:id", to: "trimesters#show"
   get "/dashboard", to: "admin_dashboard#index"
   get '/dashboard/:id', to: 'admin_dashboard#show'
 
-  resources :courses, only: [:index, :show, :edit, :update, :destroy]
+  resources :courses, only: [:index, :show, :edit, :update, :destroy, :new  ,:create]do
+  resources :submissions, only: [:new, :create, :edit, :update, :destroy]
+end
+ resources :trimesters, only: [:index, :show, :edit, :update]
 
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

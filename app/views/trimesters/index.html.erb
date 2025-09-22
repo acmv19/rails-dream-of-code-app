@@ -5,6 +5,11 @@
     <% @trimesters.each do |trimester| %>
       <li class="trimester-card">
         <%= "#{trimester.term} #{trimester.year}" %>
+        <br>
+        <strong>Application Deadline:</strong> <%= trimester.application_deadline %>
+        <br>
+        <%= link_to "Edit", edit_trimester_path(trimester), class: "edit-link" %>
+      </li>
       </li>
     <% end %>
   </ul>
