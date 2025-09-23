@@ -1,5 +1,7 @@
 class TrimestersController < ApplicationController
 before_action :set_trimester, only: [:show, :edit, :update]  
+before_action :require_admin, only: [:new, :create, :edit, :update, :destroy]
+
  def index
       @trimesters = Trimester.all
   end
@@ -7,6 +9,14 @@ before_action :set_trimester, only: [:show, :edit, :update]
   def show
   end
   
+  def new
+    @trimester = Trimester.new
+  end
+
+  def create
+    @trimester = Trimester.new(trimester_params)
+    redirect_to @trimester, notice: "Trimester created successfully." if @trimester.save
+  end
   def edit
   end
 
@@ -30,6 +40,11 @@ before_action :set_trimester, only: [:show, :edit, :update]
     end
   end
 
+  def destroy
+    @trimester.destroy!
+    redirect_to trimesters_path, status: :see_other, notice: "Trimester was successfully destroyed."
+  end
+
   private
 
   def set_trimester
@@ -37,4 +52,8 @@ before_action :set_trimester, only: [:show, :edit, :update]
   rescue ActiveRecord::RecordNotFound
     render plain: "Trimester not found", status: :not_found
   end
+  
+  def trimester_params
+  params.require(:trimester).permit(:year, :term, :start_date, :end_date, :application_deadline)
+end
 end
