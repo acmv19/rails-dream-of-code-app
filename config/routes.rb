@@ -1,8 +1,19 @@
 Rails.application.routes.draw do
+#API NAMESPACE
+ namespace :api do
+    namespace :v1 do
+      get '/courses', to: 'courses#index'
+      get '/courses/:course_id/enrollments', to: 'enrollments#index'
+    end
+  end
+
+  #SESSIONS
   get "sessions/new"
   get "sessions/create"
   get "sessions/destroy"
   get "admin_dashboard/index"
+
+  #RESOURCES
   resources :students
   resources :mentors
   resources :enrollments
@@ -13,6 +24,8 @@ Rails.application.routes.draw do
 
   #get "/trimesters", to: "trimesters#index"
  # get "/trimesters/:id", to: "trimesters#show"
+
+ #DASHBOARD
   get "/dashboard", to: "admin_dashboard#index"
   get '/dashboard/:id', to: 'admin_dashboard#show'
   
