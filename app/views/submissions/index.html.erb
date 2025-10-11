@@ -1,0 +1,29 @@
+<h1>All Submissions</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Lesson</th>
+      <th>Student</th>
+      <th>Mentor</th>
+      <th>Review Result</th>
+      <th>Pull Request</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @submissions.each do |submission| %>
+      <tr>
+        <td><%= submission.lesson.title %></td>
+        <td><%= "#{submission.enrollment.student.first_name} #{submission.enrollment.student.last_name}" %></td>
+        <td><%= submission.mentor ? "#{submission.mentor.first_name} #{submission.mentor.last_name}" : "" %></td>
+        <td><%= submission.review_result %></td>
+        <td><%= link_to 'PR', submission.pull_request_url, target: '_blank' if submission.pull_request_url.present? %></td>
+        <td>
+          <%= link_to 'Edit', edit_course_submission_path(submission.lesson.course, submission) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

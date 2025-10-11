@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get "sessions/new"
+  get "sessions/create"
+  get "sessions/destroy"
   get "admin_dashboard/index"
   resources :students
   resources :mentors
@@ -12,11 +15,17 @@ Rails.application.routes.draw do
  # get "/trimesters/:id", to: "trimesters#show"
   get "/dashboard", to: "admin_dashboard#index"
   get '/dashboard/:id', to: 'admin_dashboard#show'
+  
+  get 'login', to: 'sessions#new'
+  post 'login', to: 'sessions#create'
+  delete 'logout', to: 'sessions#destroy'
+
+  resources :submissions, only: [:index]  # fuera del bloque de courses
 
   resources :courses, only: [:index, :show, :edit, :update, :destroy, :new  ,:create]do
   resources :submissions, only: [:new, :create, :edit, :update, :destroy]
 end
- resources :trimesters, only: [:index, :show, :edit, :update]
+ resources :trimesters, only: [:index, :show, :new, :create, :edit, :update]
 
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

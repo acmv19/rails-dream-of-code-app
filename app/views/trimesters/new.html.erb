@@ -1,0 +1,35 @@
+<h1>New Trimester</h1>
+
+<%= form_with(model: @trimester) do |f| %>
+  <div>
+    <%= f.label :year %>
+    <%= f.number_field :year %>
+  </div>
+
+  <div>
+    <%= f.label :term %>
+    <%= f.text_field :term %>
+  </div>
+
+  <div>
+    <%= f.label :start_date %>
+    <%= f.date_field :start_date %>
+  </div>
+
+  <div>
+    <%= f.label :end_date %>
+    <%= f.date_field :end_date %>
+  </div>
+
+  <div>
+    <%= f.label :application_deadline %>
+    <%= f.date_field :application_deadline %>
+  </div>
+
+  <div>
+    <%= f.submit "Create Trimester" %>
+  </div>
+<% end %>
+
+
+<%= link_to 'Back', trimesters_path %>
